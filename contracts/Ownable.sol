@@ -1,8 +1,8 @@
 pragma solidity ^0.4.18;
 
 contract Ownable {
-    function owned() public { owner = msg.sender; }
-    address owner;
+    function owned() public { contractOwner = msg.sender; }
+    address contractOwner;
 
     // This contract only defines a modifier but does not use
     // it: it will be used in derived contracts.
@@ -12,7 +12,7 @@ contract Ownable {
     // function is executed and otherwise, an exception is
     // thrown.
     modifier onlyOwner {
-        require(msg.sender == owner);
+        require(msg.sender == contractOwner);
         _;
     }
 }

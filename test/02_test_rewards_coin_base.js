@@ -7,7 +7,7 @@ contract('RewardsCoinBase', function(accounts) {
     var factoryAddress = 0x123;
 
     let instance = await RewardsCoinBase.deployed();
-    await instance.setCoinTypeFactoryAddress(factoryAddress);
+    await instance.setCoinTypeFactoryAddress(factoryAddress, {from: accounts[0]});
     assert.equal(await instance.coinTypeFactoryAddress(), factoryAddress , "factoryAddress wasn't set");
   });
 

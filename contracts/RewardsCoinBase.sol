@@ -32,7 +32,7 @@ function RewardsCoinBase() public {}
   function createAndSendCoin(address addr) public {
     uint8 coinType = 1;
     var newCoinId = _createRewardsCoin(coinType);
-    _transfer(owner, addr, newCoinId);
+    _transfer(contractOwner, addr, newCoinId);
   }
 
 
@@ -45,7 +45,7 @@ function RewardsCoinBase() public {}
 
       // This will assign ownership, and also emit the Transfer event as
       // per ERC721 draft
-      _transfer(0, owner, newRewardsCoinId);
+      _transfer(0, contractOwner, newRewardsCoinId);
 
       return newRewardsCoinId;
   }
