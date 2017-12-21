@@ -1,16 +1,44 @@
 import React, { Component } from 'react';
+import SimpleStorageContract from '../build/contracts/Migrations.json';
+import getWeb3 from './utils/getWeb3';
 
 export default class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      web3: null,
+      accounts: false,
+    };
+  }
+  componentWillMount() {
+    // Get network provider and web3 instance.
+    // See utils/getWeb3 for more info.
+
+    getWeb3
+      .then(results => {
+        this.setState({
+          web3: results.web3,
+        });
+        results.web3.eth.getAccounts((error, accounts) => {
+          if (accounts.length > 0) this.setState({ accounts });
+        });
+      })
+      .catch(() => {
+        console.log('Error finding web3.');
+      });
+  }
   render() {
-    // const { onClick, className, children } = this.props;
-    // const defaultClass = 'btn btn-outline-primary btn-sm ';
-    return <h1>Hello World</h1>;
+    return (
+      <div>
+        {this.state.accounts ? (
+          <h1>Logged in user: {this.state.accounts}</h1>
+        ) : (
+          <h1>Please login to Metamask</h1>
+        )}
+      </div>
+    );
   }
 }
-
-// import React, { Component } from 'react'
-// import SimpleStorageContract from '../build/contracts/SimpleStorage.json'
-// import getWeb3 from './utils/getWeb3'
 
 // import './css/oswald.css'
 // import './css/open-sans.css'
