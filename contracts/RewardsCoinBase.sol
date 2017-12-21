@@ -25,13 +25,11 @@ function RewardsCoinBase() public {
    mapping (address => uint256) ownershipTokenCount;
    mapping (uint256 => address) public rewardsCoinIndexToApproved;
 
-   // add onlyOwner
-  function setCoinTypeFactoryAddress(address addr) public {
+  function setCoinTypeFactoryAddress(address addr) public onlyOwner {
           coinTypeFactoryAddress = addr;
   }
 
-  // add onlyOwner
-  function createAndSendCoin(address addr) public {
+  function createAndSendCoin(address addr) public onlyOwner {
     uint8 coinType = 1;
     var newCoinId = _createRewardsCoin(coinType);
     _transfer(contractOwner, addr, newCoinId);
