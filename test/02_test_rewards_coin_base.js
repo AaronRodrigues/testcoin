@@ -12,13 +12,15 @@ contract('RewardsCoinBase', function(accounts) {
   });
 
   it("should create and send a coin", async () => {
-    let initialBalance =  await web3.fromWei(web3.eth.getBalance(accounts[1])).valueOf();
-    console.log(initialBalance);
 
     let instance = await RewardsCoinBase.deployed();
+    //let initialBalance = await instance.balanceOf(accounts[1]).valueOf();
+    let initialBalance = await instance.balanceOf.call(accounts[1]).then(function(balance) {return balance.toNumber();})
     await instance.createAndSendCoin(accounts[1]);
-    let endBalance = await web3.fromWei(web3.eth.getBalance(accounts[1])).valueOf();
-    assert.equal(initialBalance, endBalance, "coin wasn't transfered");
+    //let endBalance = await instance.balanceOf(accounts[1]).valueOf();
+    let endBalance = await instance.balanceOf.call(accounts[1]).then(function(balance) {return balance.toNumber();})
+
+    assert.equal(initialBalance + 1, endBalance, "coin wasn't transfered");
   });
   //
   // try {

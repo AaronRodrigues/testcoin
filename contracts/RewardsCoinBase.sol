@@ -6,7 +6,6 @@ import "./ERC721Draft.sol";
 
 contract RewardsCoinBase is Pausable, ERC721 {
 
-
 function RewardsCoinBase() public {}
 
 
@@ -31,7 +30,7 @@ function RewardsCoinBase() public {}
 
   // add onlyOwner
   function createAndSendCoin(address addr) public {
-    var coinType = 1;
+    uint8 coinType = 1;
     var newCoinId = _createRewardsCoin(coinType);
     _transfer(owner, addr, newCoinId);
   }
