@@ -19,6 +19,7 @@ export default class App extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.getBalance = this.getBalance.bind(this);
+    this.getTokens = this.getTokens.bind(this);
   }
   componentWillMount() {
     getWeb3
@@ -58,6 +59,7 @@ export default class App extends Component {
       .then(owner => {
         this.setState({ owner });
         this.getBalance();
+        this.getTokens();
       });
   }
 
@@ -77,9 +79,16 @@ export default class App extends Component {
   }
 
   getBalance(event) {
-    console.log(this.state.instance);
     this.state.instance.balanceOf(this.state.accounts[0]).then(coins => {
+      console.log(coins, this.state.accounts[0]);
       this.setState({ balance: coins.c[0] });
+    });
+  }
+
+  getTokens(event) {
+    console.log(this.state.accounts[0]);
+    this.state.instance.tokensOfOwner(this.state.accounts[0]).then(coins => {
+      console.log(coins);
     });
   }
 
