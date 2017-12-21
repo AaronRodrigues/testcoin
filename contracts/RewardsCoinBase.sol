@@ -35,6 +35,15 @@ function RewardsCoinBase() public {
     _transfer(contractOwner, addr, newCoinId);
   }
 
+  function getRewardsCoin(uint256 _id)
+      external
+      view
+      returns (
+      uint8 coinType) {
+      RewardsCoin storage rewardsCoin = rewardsCoins[_id];
+      coinType = uint8(rewardsCoin.coinType);
+  }
+
 
   function _createRewardsCoin(uint8 _coinType) internal returns (uint)
   {
