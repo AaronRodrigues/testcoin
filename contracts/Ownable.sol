@@ -1,8 +1,20 @@
 pragma solidity ^0.4.18;
 
 contract Ownable {
-    function owned() public { contractOwner = msg.sender; }
-    address contractOwner;
+    address public contractOwner;
+
+    function Ownable() public { contractOwner = msg.sender; }
+
+    /**
+    * @dev Allows the current owner to transfer control of the contract to a newOwner.
+    * @param newOwner The address to transfer ownership to.
+    */
+    function transferOwnership(address newOwner) onlyOwner {
+      if (newOwner != address(0)) {
+          contractOwner = newOwner;
+      }
+    }
+    
 
     // This contract only defines a modifier but does not use
     // it: it will be used in derived contracts.

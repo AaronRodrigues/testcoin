@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import SimpleStorageContract from '../build/contracts/Migrations.json';
+import RewardsCoinBase from '../build/contracts/RewardsCoinBase.json';
 import getWeb3 from './utils/getWeb3';
 
 export default class App extends Component {
@@ -8,30 +8,101 @@ export default class App extends Component {
     this.state = {
       web3: null,
       accounts: false,
+      owner: '',
+      newOwner: '',
+      instance: null,
     };
+
+    this.setWeb3 = this.setWeb3.bind(this);
+    this.setAccounts = this.setAccounts.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
   componentWillMount() {
-    // Get network provider and web3 instance.
-    // See utils/getWeb3 for more info.
-
     getWeb3
       .then(results => {
-        this.setState({
-          web3: results.web3,
-        });
-        results.web3.eth.getAccounts((error, accounts) => {
-          if (accounts.length > 0) this.setState({ accounts });
-        });
+        this.setWeb3(results);
       })
       .catch(() => {
         console.log('Error finding web3.');
       });
   }
+
+  setWeb3(results) {
+    this.setState({ web3: results.web3 });
+    this.setAccounts(results.web3.eth);
+    this.initContract();
+  }
+
+  setAccounts(eth) {
+    eth.getAccounts((err, accounts) => {
+      if (accounts.length > 0) this.setState({ accounts });
+    });
+  }
+
+  initContract(accounts) {
+    const contract = require('truffle-contract');
+    const simpleStorage = contract(RewardsCoinBase);
+    simpleStorage.setProvider(this.state.web3.currentProvider);
+
+    simpleStorage
+      .deployed()
+      .then(instance => {
+        this.setState({ instance });
+        return instance.contractOwner();
+      })
+      .then(owner => {
+        this.setState({ owner });
+      });
+  }
+
+  changeOwner(owner, newOwner) {
+    console.log(this.state.instance);
+    this.state.instance
+      .transferOwnership(newOwner, {
+        from: '0x627306090abab3a6e1400e9345bc60c78a8bef57',
+        gas: 999999,
+      })
+      .then(res => {
+        console.log(res);
+      });
+    // this.state.instance
+    //   .upgrade(owner, { from: owner, gas: 999999 })
+    //   .then(result => {
+    //     console.log(result);
+    //   })
+    //   .catch(err => console.log(err));
+    // console.log(this.state.instance);
+    // this.state.web3.eth.call({
+    //   to: this.state.instance.address,
+    //   data: this.state.instance.upgrade(newOwner),
+    // });
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    this.changeOwner(this.state.owner, this.state.newOwner);
+  }
+
+  handleChange(event) {
+    this.setState({ newOwner: event.target.value });
+  }
+
   render() {
     return (
       <div>
         {this.state.accounts ? (
-          <h1>Logged in user: {this.state.accounts}</h1>
+          <div>
+            <h1>Logged in user: {this.state.accounts}</h1>
+            <h2>Owner: {this.state.owner}</h2>
+            <form onSubmit={this.handleSubmit}>
+              <label>
+                Name:
+                <input type="text" value={this.state.newOwner} onChange={this.handleChange} />
+              </label>
+              <input type="submit" value="Submit" />
+            </form>
+          </div>
         ) : (
           <h1>Please login to Metamask</h1>
         )}

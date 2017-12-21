@@ -1,0 +1,188 @@
+{
+  "contractName": "CoinTypeFactory",
+  "abi": [
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "getCoinType",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint8"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "pure",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x60606040523415600e57600080fd5b60a58061001c6000396000f300606060405260043610603f576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806394149c1a146044575b600080fd5b3415604e57600080fd5b60546070565b604051808260ff1660ff16815260200191505060405180910390f35b600060019050905600a165627a7a723058208df6e6bf5e69446efdef7ec61c0cb610a47b3ff375b76dbf8dd0995bd7ab0edf0029",
+  "deployedBytecode": "0x606060405260043610603f576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806394149c1a146044575b600080fd5b3415604e57600080fd5b60546070565b604051808260ff1660ff16815260200191505060405180910390f35b600060019050905600a165627a7a723058208df6e6bf5e69446efdef7ec61c0cb610a47b3ff375b76dbf8dd0995bd7ab0edf0029",
+  "sourceMap": "26:106:0:-;;;;;;;;;;;;;;;;;",
+  "deployedSourceMap": "26:106:0:-;;;;;;;;;;;;;;;;;;;;;;;;54:76;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;98:5;122:1;115:8;;54:76;:::o",
+  "source": "pragma solidity ^0.4.18;\n\ncontract CoinTypeFactory {\n\nfunction getCoinType() public pure returns (uint8) {\n        return 1;\n    }\n}\n",
+  "sourcePath": "/Users/simondrake/Desktop/rewardscoin/contracts/CoinTypeFactory.sol",
+  "ast": {
+    "attributes": {
+      "absolutePath": "/Users/simondrake/Desktop/rewardscoin/contracts/CoinTypeFactory.sol",
+      "exportedSymbols": {
+        "CoinTypeFactory": [
+          10
+        ]
+      }
+    },
+    "children": [
+      {
+        "attributes": {
+          "literals": [
+            "solidity",
+            "^",
+            "0.4",
+            ".18"
+          ]
+        },
+        "id": 1,
+        "name": "PragmaDirective",
+        "src": "0:24:0"
+      },
+      {
+        "attributes": {
+          "baseContracts": [
+            null
+          ],
+          "contractDependencies": [
+            null
+          ],
+          "contractKind": "contract",
+          "documentation": null,
+          "fullyImplemented": true,
+          "linearizedBaseContracts": [
+            10
+          ],
+          "name": "CoinTypeFactory",
+          "scope": 11
+        },
+        "children": [
+          {
+            "attributes": {
+              "constant": true,
+              "implemented": true,
+              "isConstructor": false,
+              "modifiers": [
+                null
+              ],
+              "name": "getCoinType",
+              "payable": false,
+              "scope": 10,
+              "stateMutability": "pure",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 2,
+                "name": "ParameterList",
+                "src": "74:2:0"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "",
+                      "scope": 9,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint8",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint8",
+                          "type": "uint8"
+                        },
+                        "id": 3,
+                        "name": "ElementaryTypeName",
+                        "src": "98:5:0"
+                      }
+                    ],
+                    "id": 4,
+                    "name": "VariableDeclaration",
+                    "src": "98:5:0"
+                  }
+                ],
+                "id": 5,
+                "name": "ParameterList",
+                "src": "97:7:0"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "functionReturnParameters": 5
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "hexvalue": "31",
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "lValueRequested": false,
+                          "subdenomination": null,
+                          "token": "number",
+                          "type": "int_const 1",
+                          "value": "1"
+                        },
+                        "id": 6,
+                        "name": "Literal",
+                        "src": "122:1:0"
+                      }
+                    ],
+                    "id": 7,
+                    "name": "Return",
+                    "src": "115:8:0"
+                  }
+                ],
+                "id": 8,
+                "name": "Block",
+                "src": "105:25:0"
+              }
+            ],
+            "id": 9,
+            "name": "FunctionDefinition",
+            "src": "54:76:0"
+          }
+        ],
+        "id": 10,
+        "name": "ContractDefinition",
+        "src": "26:106:0"
+      }
+    ],
+    "id": 11,
+    "name": "SourceUnit",
+    "src": "0:133:0"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.4.18+commit.9cf6e910.Emscripten.clang"
+  },
+  "networks": {
+    "4447": {
+      "events": {},
+      "links": {},
+      "address": "0x82d50ad3c1091866e258fd0f1a7cc9674609d254"
+    }
+  },
+  "schemaVersion": "1.0.1",
+  "updatedAt": "2017-12-21T14:54:37.032Z"
+}

@@ -6,7 +6,9 @@ import "./ERC721Draft.sol";
 
 contract RewardsCoinBase is Pausable, ERC721 {
 
-function RewardsCoinBase() public {}
+function RewardsCoinBase() public {
+    contractOwner = msg.sender;
+}
 
 
   address public coinTypeFactoryAddress;
