@@ -9,12 +9,12 @@ contract Ownable {
     * @dev Allows the current owner to transfer control of the contract to a newOwner.
     * @param newOwner The address to transfer ownership to.
     */
-    function transferOwnership(address newOwner) onlyOwner {
+    function transferOwnership(address newOwner) public onlyOwner {
       if (newOwner != address(0)) {
           contractOwner = newOwner;
       }
     }
-    
+
 
     // This contract only defines a modifier but does not use
     // it: it will be used in derived contracts.

@@ -25,13 +25,11 @@ function RewardsCoinBase() public {
    mapping (address => uint256) ownershipTokenCount;
    mapping (uint256 => address) public rewardsCoinIndexToApproved;
 
-   // add onlyOwner
-  function setCoinTypeFactoryAddress(address addr) public {
+  function setCoinTypeFactoryAddress(address addr) public onlyOwner {
           coinTypeFactoryAddress = addr;
   }
 
-  // add onlyOwner
-  function createAndSendCoin(address addr) public {
+  function createAndSendCoin(address addr) public onlyOwner {
     uint8 coinType = 1;
     var newCoinId = _createRewardsCoin(coinType);
     _transfer(contractOwner, addr, newCoinId);
@@ -129,6 +127,28 @@ function RewardsCoinBase() public {
       }
       // Emit the transfer event.
       Transfer(_from, _to, _tokenId);
+  }
+
+  function tokensOfOwner(address _owner) external view returns(uint256[] ownerTokens) {
+      uint256 tokenCount = balanceOf(_owner);
+
+      if (tokenCount == 0) {
+          return new uint256[](0);
+      } else {
+          uint256[] memory result = new uint256[](tokenCount);
+          uint256 totalRewardsCoins = totalSupply();
+          uint256 resultIndex = 0;
+
+          uint256 coinId;
+
+          for (coinId = 1; coinId <= totalRewardsCoins; coinId++) {
+              if (_owns(_owner, coinId)) {
+                  result[resultIndex] = coinId;
+                  resultIndex++;
+              }
+          }
+          return result;
+      }
   }
 
 
