@@ -11,12 +11,14 @@ export default class App extends Component {
       owner: '',
       newOwner: '',
       instance: null,
+      balance: 0,
     };
 
     this.setWeb3 = this.setWeb3.bind(this);
     this.setAccounts = this.setAccounts.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.getBalance = this.getBalance.bind(this);
   }
   componentWillMount() {
     getWeb3
@@ -36,7 +38,9 @@ export default class App extends Component {
 
   setAccounts(eth) {
     eth.getAccounts((err, accounts) => {
-      if (accounts.length > 0) this.setState({ accounts });
+      if (accounts.length > 0) {
+        this.setState({ accounts });
+      }
     });
   }
 
@@ -53,30 +57,14 @@ export default class App extends Component {
       })
       .then(owner => {
         this.setState({ owner });
+        this.getBalance();
       });
   }
 
   changeOwner(owner, newOwner) {
-    console.log(this.state.instance);
-    this.state.instance
-      .transferOwnership(newOwner, {
-        from: '0x627306090abab3a6e1400e9345bc60c78a8bef57',
-        gas: 999999,
-      })
-      .then(res => {
-        console.log(res);
-      });
-    // this.state.instance
-    //   .upgrade(owner, { from: owner, gas: 999999 })
-    //   .then(result => {
-    //     console.log(result);
-    //   })
-    //   .catch(err => console.log(err));
-    // console.log(this.state.instance);
-    // this.state.web3.eth.call({
-    //   to: this.state.instance.address,
-    //   data: this.state.instance.upgrade(newOwner),
-    // });
+    this.state.instance.transferOwnership(newOwner, { from: owner, gas: 999999 }).then(res => {
+      this.setState({ owner: newOwner, newOwner: '' });
+    });
   }
 
   handleSubmit(event) {
@@ -88,12 +76,30 @@ export default class App extends Component {
     this.setState({ newOwner: event.target.value });
   }
 
+  getBalance(event) {
+    console.log(this.state.instance);
+    this.state.instance.balanceOf(this.state.accounts[0]).then(coins => {
+      this.setState({ balance: coins.c[0] });
+    });
+  }
+
   render() {
     return (
       <div>
+        {this.state.accounts[0] === this.state.owner ? (
+          <h1
+            style={{
+              color: 'red',
+            }}
+          >
+            YOU ARE THE OWNER
+          </h1>
+        ) : null}
         {this.state.accounts ? (
           <div>
-            <h1>Logged in user: {this.state.accounts}</h1>
+            <h1>Logged in user: {this.state.accounts[0]}</h1>
+            <h1>My Balance: {this.state.balance}</h1>
+
             <h2>Owner: {this.state.owner}</h2>
             <form onSubmit={this.handleSubmit}>
               <label>
